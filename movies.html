@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #contener{
+            width: 90%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 20px;
+        }
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.4s;
+        }
+
+        button:hover{
+            background-color: blue;
+        }
+
+    </style>
+</head>
+<body> 
+    
+    
+ 
+    
+
+
+
+ 
+    <div id="navbar">
+ <a href="./movies.html"> <button>HOME</button> </a>
+
+<input type="text" id="searchInput" placeholder="Search by name">
+    <button id="searchButton">Search</button>
+<div id="contener">
+
+  
+</div>
+    </div>
+   
+
+
+ 
+
+    
+    
+    <script>
+        const url = "/Movie.json";
+        const contener = document.getElementById("contener");
+        const searchInput = document.getElementById("searchInput");
+        const searchButton = document.getElementById("searchButton");
+
+       
+
+
+
+
+
+
+
+
+
+        async function fetchData() {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                Display(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
+        
+        function Display(data) {
+            data.forEach(function (user) {
+                let card = document.createElement("div");
+        
+                let Title = document.createElement("h2");
+                let Actors = document.createElement("h3");
+                let Year = document.createElement("p");
+                let Country = document.createElement("p");
+                let Awards = document.createElement("p"); // Changed to p
+                let Genre = document.createElement("p"); // Changed to p
+                let Poster = document.createElement("img");
+                let Downlod=document.createElement("button")
+                
+                Title.innerText = user.Title;
+                Actors.innerText = user.Actors;
+                Country.innerText = user.Country;
+                Year.innerText = user.Year;
+                Awards.innerText = "Awards: " + user.Awards; // Changed assignment format
+                Genre.innerText = "Genre: " + user.Genre; // Changed assignment format
+                Poster.setAttribute("src", user.Poster);
+                Downlod.innerText="Downlod";
+
+
+
+
+                Downlod.addEventListener("click", function (e) {
+             
+                    e.preventDefault();
+                    window.location.href="https://moviesflix.ch/ ";
+
+          });
+
+
+
+
+    
+                card.append(Title, Actors, Country, Year, Awards, Genre,
+                 Poster,Downlod);
+                contener.append(card);
+            });
+        }
+        
+        searchButton.addEventListener("click", function () {
+            const searchTerm = searchInput.value.toLowerCase();
+            const cards = contener.querySelectorAll("div");
+        
+            cards.forEach(card => {
+                const name = card.querySelector("h2").innerText.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+
+
+
+
+      
+
+    </script>
+</body>
+</html>
